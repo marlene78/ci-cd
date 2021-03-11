@@ -1,6 +1,13 @@
 steps:
 
 
+- name: node
+  entrypoint: npm
+  args: ['install']
+- name: node
+  entrypoint: npm
+  args: ['test']
+
 - name: docker-maven
   dir: 'app/'
   args: ['build' , '-t' , 'lingisi/maven:latest' , '.']
