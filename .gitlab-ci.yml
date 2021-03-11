@@ -1,0 +1,67 @@
+variables:
+  MAVEN_CLI_OPTS: "--batch-mode"
+
+
+compile-maven:
+  image: maven:latest
+  stage: build
+  script:
+    - mvn $MAVEN_CLI_OPTS compile 
+    - mvn clean install
+  cache:
+    paths:
+      - ./target
+
+
+
+docker-build-node:
+  image: node:latest
+  stage: build
+  script:
+    - cd app
+    - npm install
+  cache:
+    paths:
+      - node_modules/
+
+
+test_job_maven:
+  image: maven:latest
+  stage: test
+  script:
+    - mvn $MAVEN_CLI_OPTS test
+
+test_job_node:
+  image: node:latest
+  stage: test
+  script:
+    - echo "test"
+
+docker-maven:
+  image: docker:latest
+  stage: deploy
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u $USERNAME -p $PASSWORD
+  script:
+    - docker build -t lingisi/maven:latest .
+    - docker push lingisi/maven:latest
+  only:
+    - master
+
+
+docker-node:
+  image: docker:latest
+  stage: deploy
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u $USERNAME -p $PASSWORD
+  script:
+    - cd app
+    - docker build -t lingisi/backend-node:latest .
+    - docker push lingisi/backend-node:latest
+  only:
+    - master
+
