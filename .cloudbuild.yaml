@@ -2,8 +2,7 @@ steps:
 
 
 - name: node
-  dir: app
-  args: ['build' , '.']
+  args: ['build' , '/app']
 
 - name: node
   dir: app
