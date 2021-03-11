@@ -8,6 +8,17 @@ steps:
   entrypoint: npm
   args: ['test']
 
+
+- name: maven
+  entrypoint: mvn
+  args: ['test']
+- name: maven 
+  entrypoint: mvn
+  args: ['build' , '.']
+
+
+
+
 - name: docker-maven
   dir: 'app/'
   args: ['build' , '-t' , 'lingisi/maven:latest' , '.']
