@@ -2,11 +2,16 @@ steps:
 
 
 - name: node
-  args: ['build' , 'app/']
+  dir: app
+  args: ['build' , '.']
+
 - name: node
+  dir: app
   entrypoint: npm
   args: ['install']
+
 - name: node
+  dir: app
   entrypoint: npm
   args: ['test']
 
