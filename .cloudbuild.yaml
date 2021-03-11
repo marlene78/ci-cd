@@ -2,6 +2,8 @@ steps:
 
 
 - name: node
+  args: ['build' , 'app/']
+- name: node
   entrypoint: npm
   args: ['install']
 - name: node
